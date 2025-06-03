@@ -2,8 +2,10 @@ import csv
 import os
 from datetime import datetime, timedelta
 import tkinter as tk
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageFont, ImageDraw
 import time
+from bidi.algorithm import get_display
+import arabic_reshaper
 
 print('loading .....')
 # --- Load today's prayer times ---
@@ -27,7 +29,9 @@ if not times:
 print('table read')
 
 time_objs = [(label, datetime.strptime(times[label], '%I:%M %p').time()) for label in times]
-
+tamil_font = ImageFont.truetype(
+    "/usr/share/fonts/truetype/noto/NotoSerifTamil-Regular.ttf", 80
+)
 # --- Get next upcoming prayer times ---
 def get_next_times(prayer_times):
     now_dt = datetime.now()
@@ -72,7 +76,7 @@ root.geometry(f"{scr_width}x{scr_height}")
 root.attributes('-fullscreen', True)
 
 # Load background images
-bg_image = Image.open("/home/pi/azan/background3.jpg")
+bg_image = Image.open("/home/pi/azan/background6.jpg")
 bg_photo = ImageTk.PhotoImage(bg_image.resize((scr_width, scr_height)))
 bg_image1 = Image.open("/home/pi/azan/background5.jpg")
 bg_photo1 = ImageTk.PhotoImage(bg_image1.resize((scr_width, scr_height)))
@@ -82,18 +86,29 @@ main_canvas = tk.Canvas(root, width=scr_width, height=scr_height)
 main_canvas.pack(fill="both", expand=True)
 main_canvas.create_image(0, 0, image=bg_photo, anchor="nw")
 
+# tamil text
+img = Image.new("RGBA", (300, 100), (0, 0, 0, 0))
+draw = ImageDraw.Draw(img)
+#draw.text((0, 0), "அசர்", font=tamil_font, fill="yellow")
+
 # Display elements
 time_text = main_canvas.create_text(
-    scr_width // 2, scr_height // 6, text="", font=("Rubik", 220, "bold"), fill="lime"
+    scr_width // 2, scr_height // 4, text="", font=("Rubik", 220, "bold"), fill="lime"
 )
 next_text = main_canvas.create_text(
-    scr_width // 2, scr_height // 2.5, text="", font=("Rubik", 230, "bold"), fill="yellow"
+    scr_width // 2 - 150, scr_height // 2, text="", font=("Rubik", 230, "bold"), fill="yellow", anchor="w"
 )
 extra_text = main_canvas.create_text(
-    scr_width // 2, scr_height * 2 // 3, text="", font=("Rubik", 230, "bold"), fill="red"
+    scr_width // 2 - 150, scr_height * 3 // 4, text="", font=("Rubik", 230, "bold"), fill="red", anchor="w"
 )
-waqth_text = main_canvas.create_text(
-    20, scr_height // 2.5, text="", font=("Rubik", 80), fill="yellow", anchor="w"
+waqth_text1 = main_canvas.create_text(
+    scr_width // 2 - 250, scr_height // 2 - 30, text="", font=("Rubic", 50), fill="yellow", anchor="e"
+)
+#waqth_text2 = main_canvas.create_text(
+#    scr_width // 2 - 250, scr_height // 2 + 75, text="", font=tamil_font, fill="yellow", anchor="e"
+#)
+iqama_txt = main_canvas.create_text(
+    scr_width // 2 - 250, scr_height * 3 // 4, text="", font=("Amiri", 80), fill="red", anchor="e"
 )
 
 # Countdown canvas
@@ -192,8 +207,30 @@ def update():
             # Update the next prayer and iqamah time on the main canvas
             next_2 = get_next_times(time_objs)
             #main_canvas.pack(fill="both", expand=True)
-
-        main_canvas.itemconfig(waqth_text, text=label)
+        lookup_dict = {
+            "Subahu": "الفجر,சுபஹ்",
+            "Sunrise": "شروق,சூரிய உதயம்",
+            "Zuhar": "الظهر,லுஹர்",
+            "Asar": "العصر,அஸர்",
+            "Maghrib": "المغرب,மஃரிப்",
+            "Isha": "العشاء,இஷா"
+            }
+        # Use lookup_dict to get the translated value for the label
+        translated_label = lookup_dict.get(label, label)
+        #print(translated_label)
+        #txt1 = translated_label.split(',')[0]
+        txt2 = translated_label.split(',')[1]
+        #reshaped1 = arabic_reshaper.reshape(txt1)
+        #rtl_text = "\u202B" + reshaped1 + "\u202C"
+        draw.text((0, 0), txt2, font=tamil_font, fill="yellow")
+        tk_img = ImageTk.PhotoImage(img)
+        main_canvas.tk_img = tk_img
+        main_canvas.create_image(scr_width // 2 - 250, scr_height // 2 + 75, anchor="e", image=tk_img)
+        reshaped2 = arabic_reshaper.reshape(txt2)
+        main_canvas.itemconfig(waqth_text1, text=label)
+        #print(translated_label)
+        #main_canvas.itemconfig(waqth_text2, text=reshaped2)
+        main_canvas.itemconfig(iqama_txt, text="இகாமத்")
         main_canvas.itemconfig(next_text, text=f"{next_time.strftime('%I:%M')}")
         main_canvas.itemconfig(extra_text, text=f"{iqamah_time.strftime('%I:%M')}")
 
