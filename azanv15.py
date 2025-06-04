@@ -30,7 +30,7 @@ print('table read')
 
 time_objs = [(label, datetime.strptime(times[label], '%I:%M %p').time()) for label in times]
 tamil_font = ImageFont.truetype(
-    "/usr/share/fonts/truetype/noto/NotoSerifTamil-Regular.ttf", 80
+    "/usr/share/fonts/truetype/noto/NotoSerifTamil-Regular.ttf", 90
 )
 # --- Get next upcoming prayer times ---
 def get_next_times(prayer_times):
