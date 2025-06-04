@@ -76,7 +76,7 @@ root.geometry(f"{scr_width}x{scr_height}")
 root.attributes('-fullscreen', True)
 
 # Load background images
-bg_image = Image.open("/home/pi/azan/background6.jpg")
+bg_image = Image.open("/home/pi/azan/Filebin/background7.jpg")
 bg_photo = ImageTk.PhotoImage(bg_image.resize((scr_width, scr_height)))
 bg_image1 = Image.open("/home/pi/azan/background5.jpg")
 bg_photo1 = ImageTk.PhotoImage(bg_image1.resize((scr_width, scr_height)))
