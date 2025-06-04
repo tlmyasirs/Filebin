@@ -30,7 +30,7 @@ print('table read')
 
 time_objs = [(label, datetime.strptime(times[label], '%I:%M %p').time()) for label in times]
 tamil_font = ImageFont.truetype(
-    "/usr/share/fonts/truetype/noto/NotoSerifTamil-Regular.ttf", 90
+    "/usr/share/fonts/truetype/noto/NotoSerifTamil-Regular.ttf", 100
 )
 # --- Get next upcoming prayer times ---
 def get_next_times(prayer_times):
@@ -220,7 +220,7 @@ def update():
         txt2 = translated_label.split(',')[1]
 
         # tamil text
-        img = Image.new("RGBA", (300, 100), (0, 0, 0, 0))
+        img = Image.new("RGBA", (350, 200), (0, 0, 0, 0))
         draw = ImageDraw.Draw(img)
         draw.text((0, 0), txt2, font=tamil_font, fill="yellow")
         tk_img = ImageTk.PhotoImage(img)
