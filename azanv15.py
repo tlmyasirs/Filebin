@@ -86,9 +86,7 @@ main_canvas = tk.Canvas(root, width=scr_width, height=scr_height)
 main_canvas.pack(fill="both", expand=True)
 main_canvas.create_image(0, 0, image=bg_photo, anchor="nw")
 
-# tamil text
-img = Image.new("RGBA", (300, 100), (0, 0, 0, 0))
-draw = ImageDraw.Draw(img)
+
 #draw.text((0, 0), "அசர்", font=tamil_font, fill="yellow")
 
 # Display elements
@@ -209,7 +207,7 @@ def update():
             #main_canvas.pack(fill="both", expand=True)
         lookup_dict = {
             "Subahu": "الفجر,சுபஹ்",
-            "Sunrise": "شروق,சூரிய உதயம்",
+            "Sunrise": "شروق,உதயம்",
             "Zuhar": "الظهر,லுஹர்",
             "Asar": "العصر,அஸர்",
             "Maghrib": "المغرب,மஃரிப்",
@@ -220,17 +218,22 @@ def update():
         #print(translated_label)
         #txt1 = translated_label.split(',')[0]
         txt2 = translated_label.split(',')[1]
-        #reshaped1 = arabic_reshaper.reshape(txt1)
-        #rtl_text = "\u202B" + reshaped1 + "\u202C"
+
+        # tamil text
+        img = Image.new("RGBA", (300, 100), (0, 0, 0, 0))
+        draw = ImageDraw.Draw(img)
         draw.text((0, 0), txt2, font=tamil_font, fill="yellow")
         tk_img = ImageTk.PhotoImage(img)
         main_canvas.tk_img = tk_img
         main_canvas.create_image(scr_width // 2 - 250, scr_height // 2 + 75, anchor="e", image=tk_img)
-        reshaped2 = arabic_reshaper.reshape(txt2)
         main_canvas.itemconfig(waqth_text1, text=label)
         #print(translated_label)
         #main_canvas.itemconfig(waqth_text2, text=reshaped2)
-        main_canvas.itemconfig(iqama_txt, text="இகாமத்")
+        if label == "Sunrise":
+            # luhaa
+            main_canvas.itemconfig(iqama_txt, text="லுஹா")
+        else:
+            main_canvas.itemconfig(iqama_txt, text="இகாமத்")
         main_canvas.itemconfig(next_text, text=f"{next_time.strftime('%I:%M')}")
         main_canvas.itemconfig(extra_text, text=f"{iqamah_time.strftime('%I:%M')}")
 
