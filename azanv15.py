@@ -115,10 +115,10 @@ countdown_canvas.create_image(0, 0, image=bg_photo1, anchor="nw")
 
 # --- Countdown screen ---
 def countdown_screen(secs, next_prayer_label):
-    print("in countdown")
+    print("inside countdown")
     
-    print(f'insie cnt{secs}')
-    if secs <= 0:
+    print(f'count:{secs}')
+    if secs <= 1:
         print("countdown finished")
         # Exit countdown and return to the main screen
         countdown_canvas.pack_forget()
@@ -126,7 +126,7 @@ def countdown_screen(secs, next_prayer_label):
         time.sleep(1)  # Sleep for a second to show the last countdown
         update()  # Refresh for the next prayer
         return
-    print("countdown...")
+    print("counting...")
     main_canvas.pack_forget()
     countdown_canvas.pack(fill="both", expand=True)
     # Clear the countdown canvas
@@ -162,7 +162,7 @@ def countdown_screen(secs, next_prayer_label):
     )
 
     countdown_canvas.create_text(
-        scr_width // 2, scr_height * 7 // 8,
+        scr_width // 2, scr_height * 6 // 8,
         text="Your Mobile Phones",
         font=("Arial", 120),
         fill="white",
