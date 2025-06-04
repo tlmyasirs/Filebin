@@ -225,7 +225,7 @@ def update():
         draw.text((0, 0), txt2, font=tamil_font, fill="yellow")
         tk_img = ImageTk.PhotoImage(img)
         main_canvas.tk_img = tk_img
-        main_canvas.create_image(scr_width // 2 - 250, scr_height // 2 + 75, anchor="e", image=tk_img)
+        main_canvas.create_image(scr_width // 2 - 250, scr_height // 2 + 80, anchor="e", image=tk_img)
         main_canvas.itemconfig(waqth_text1, text=label)
         #print(translated_label)
         #main_canvas.itemconfig(waqth_text2, text=reshaped2)
