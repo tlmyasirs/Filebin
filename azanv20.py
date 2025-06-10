@@ -146,6 +146,7 @@ label_minutes = {
 
 # ====== Countdown Functions ======
 def show_countdown(seconds, label):
+    print("started count")
     mins, secs = divmod(seconds, 60)
     countdown_canvas.itemconfig(countdown_title, text=f"{label.upper()} - COUNTDOWN")
     countdown_canvas.itemconfig(countdown_time, text=f"{mins:02}:{secs:02}")
