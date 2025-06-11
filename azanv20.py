@@ -196,6 +196,7 @@ def update():
 
 # ====== Initialization ======
 print('Starting application...')
+tamil_images = prerender_tamil_text()
 update.next_prayer = get_next_prayer()
 update()
 
