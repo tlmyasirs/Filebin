@@ -91,7 +91,7 @@ loading_canvas = tk.Canvas(root, width=scr_width, height=scr_height, bg='black')
 loading_canvas.pack(fill="both", expand=True)
 loading_text = loading_canvas.create_text(
     scr_width // 2, scr_height // 2, 
-    text="Loading...", 
+    text="Muezzin is starting...", 
     font=("Arial", 80), 
     fill="white"
 )
