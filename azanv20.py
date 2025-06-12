@@ -4,16 +4,20 @@ from datetime import datetime, timedelta
 import tkinter as tk
 from PIL import Image, ImageTk, ImageFont, ImageDraw
 import time
-import arabic_reshaper
-from bidi.algorithm import get_display
+#import arabic_reshaper
+#from bidi.algorithm import get_display
 
 print('loading .....')
 
 # ====== Configuration Constants ======
-FONT_DIR = "/usr/share/fonts/truetype/noto/"
-CSV_FILE = "/home/pi/azan/table.csv"
-BG_IMAGE1 = "/home/pi/azan/Filebin/background7.jpg"
-BG_IMAGE2 = "/home/pi/azan/background5.jpg"
+#FONT_DIR = "/usr/share/fonts/truetype/noto/"
+FONT_DIR = f'C:\Windows\Fonts\\'
+#CSV_FILE = "/home/pi/azan/table.csv"
+CSV_FILE = "table_test.csv"
+#BG_IMAGE1 = "/home/pi/azan/Filebin/background7.jpg"
+#BG_IMAGE2 = "/home/pi/azan/background5.jpg"
+BG_IMAGE1 = "background7.jpg"
+BG_IMAGE2 = "background5.jpg"
 
 # ====== Precomputed Values ======
 # Preload all prayer times
@@ -35,7 +39,8 @@ def prerender_tamil_text():
         "Maghrib": "மஃரிப்",
         "Isha": "இஷா"
     }
-    tamil_font = ImageFont.truetype(os.path.join(FONT_DIR, "NotoSerifTamil-Regular.ttf"), 100)
+    #tamil_font = ImageFont.truetype(os.path.join(FONT_DIR, "NotoSerifTamil-Regular.ttf"), 100)
+    tamil_font = ImageFont.truetype(os.path.join(FONT_DIR, "NIRMALAB.TTF"), 100)
     images = {}
     
     for label, text in lookup_dict.items():
@@ -145,7 +150,7 @@ label_minutes = {
 
 # ====== Countdown Functions ======
 def show_countdown(seconds, label):
-    print("started count")
+    print(f"count:{seconds}")
     mins, secs = divmod(seconds, 60)
     countdown_canvas.itemconfig(countdown_title, text=f"{label.upper()} - COUNTDOWN")
     countdown_canvas.itemconfig(countdown_time, text=f"{mins:02}:{secs:02}")
@@ -164,12 +169,13 @@ def update():
     
     if update.next_prayer[0]:
         label, prayer_time = update.next_prayer
-        duration = label_minutes.get(label, 15)
+        duration = label_minutes.get(label, 1)
         iqamah_time = prayer_time + timedelta(minutes=duration)
         
         # Show countdown if in prayer window
         if prayer_time <= now_dt < iqamah_time:
             remaining = int((iqamah_time - now_dt).total_seconds())
+            print("started countdown")
             show_countdown(remaining, label)
         
         # Update to next prayer if current has passed
