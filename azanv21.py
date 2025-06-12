@@ -47,7 +47,7 @@ def prerender_tamil_text():
 
 # Load data and prerender images
 prayer_data = load_all_prayer_times(CSV_FILE)
-tamil_images = prerender_tamil_text()
+
 
 # ====== Prayer Time Functions ======
 def get_todays_times():
@@ -263,6 +263,8 @@ def setup_main_ui(bg_photo, bg_photo1):
     # ====== Initialization ======
     print('Starting application...')
     update()
+
+tamil_images = prerender_tamil_text()
 
 # Start main loop
 root.mainloop()
