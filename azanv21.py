@@ -200,6 +200,9 @@ def setup_main_ui(bg_photo, bg_photo1):
         return True  # Continue countdown
 
     # ====== Main Update Loop ======
+    # Add this line at the start of setup_main_ui to track the image item
+    main_canvas.tamil_img_item = None
+
     def update():
         now_dt = datetime.now()
         
@@ -248,9 +251,14 @@ def setup_main_ui(bg_photo, bg_photo1):
             if state.next_prayer[0]:
                 # Update Tamil image
                 if label in tamil_images:
+                    # Remove previous Tamil image if exists
+                    if main_canvas.tamil_img_item is not None:
+                        main_canvas.delete(main_canvas.tamil_img_item)
                     main_canvas.tk_img = tamil_images[label]  # Keep reference
-                    main_canvas.create_image(scr_width // 2 - 250, scr_height // 2 + 80, 
-                                            anchor="e", image=tamil_images[label])
+                    main_canvas.tamil_img_item = main_canvas.create_image(
+                        scr_width // 2 - 250, scr_height // 2 + 80,
+                        anchor="e", image=tamil_images[label]
+                    )
                 
                 # Update text elements
                 main_canvas.itemconfig(waqth_text1, text=label)
