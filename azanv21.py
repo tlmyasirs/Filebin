@@ -9,10 +9,10 @@ print('loading .....')
 
 # ====== Configuration Constants ======
 FONT_DIR = "/usr/share/fonts/truetype/noto/"
-#CSV_FILE = "/home/pi/azan/Filebin/table.csv"
-CSV_FILE = "/home/pi/azan/Filebin/table_test.csv"
+CSV_FILE = "/home/pi/azan/Filebin/table.csv"
+#CSV_FILE = "/home/pi/azan/Filebin/table_test.csv"
 BG_IMAGE1 = "/home/pi/azan/Filebin/background7.jpg"
-BG_IMAGE2 = "/home/pi/azan/background5.jpg"
+BG_IMAGE2 = "/home/pi/azan/Filebin/background5.jpg"
 
 # ====== Precomputed Values ======
 # Preload all prayer times
