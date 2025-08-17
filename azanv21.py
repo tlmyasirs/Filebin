@@ -38,7 +38,7 @@ def prerender_tamil_text():
     images = {}
     
     for label, text in lookup_dict.items():
-        img = Image.new("RGBA", (350, 200), (0, 0, 0, 0))
+        img = Image.new("RGBA", (360, 210), (0, 0, 0, 0))
         draw = ImageDraw.Draw(img)
         draw.text((0, 0), text, font=tamil_font, fill="yellow")
         tk_img = ImageTk.PhotoImage(img)
@@ -123,15 +123,17 @@ def setup_main_ui(bg_photo, bg_photo1):
     main_canvas.create_image(0, 0, image=bg_photo, anchor="nw")
     main_canvas.bg_photo = bg_photo  # Keep reference
 
+    time_font_size = int(scr_height / 4) 
+    next_fornt_size = int(scr_height / 4 + 10)
     # Display elements
     time_text = main_canvas.create_text(
-        scr_width // 2, scr_height // 4, text="", font=("Rubik", 220, "bold"), fill="lime"
+        scr_width // 2, scr_height // 4 - 50, text="", font=("Rubik", time_font_size, "bold"), fill="lime"
     )
     next_text = main_canvas.create_text(
-        scr_width // 2 - 150, scr_height // 2, text="", font=("Rubik", 230, "bold"), fill="yellow", anchor="w"
+        scr_width // 2 - 150, scr_height // 2, text="", font=("Rubik", next_fornt_size, "bold"), fill="yellow", anchor="w"
     )
     extra_text = main_canvas.create_text(
-        scr_width // 2 - 150, scr_height * 3 // 4, text="", font=("Rubik", 230, "bold"), fill="red", anchor="w"
+        scr_width // 2 - 150, scr_height * 3 // 4 + 50, text="", font=("Rubik", next_fornt_size, "bold"), fill="red", anchor="w"
     )
     waqth_text1 = main_canvas.create_text(
         scr_width // 2 - 250, scr_height // 2 - 30, text="", font=("Rubic", 50), fill="yellow", anchor="e"
