@@ -127,19 +127,19 @@ def setup_main_ui(bg_photo, bg_photo1):
     next_fornt_size = int(scr_height / 4 + 10)
     # Display elements
     time_text = main_canvas.create_text(
-        scr_width // 2 + 20, scr_height // 4 - 50, text="", font=("Rubik", time_font_size, "bold"), fill="lime"
+        scr_width // 2 + 30, scr_height // 4 - 50, text="", font=("Rubik", time_font_size, "bold"), fill="lime"
     )
     next_text = main_canvas.create_text(
-        scr_width // 2 - 170, scr_height // 2, text="", font=("Rubik", next_fornt_size, "bold"), fill="yellow", anchor="w"
+        scr_width // 2 - 180, scr_height // 2, text="", font=("Rubik", next_fornt_size, "bold"), fill="yellow", anchor="w"
     )
     extra_text = main_canvas.create_text(
-        scr_width // 2 - 170, scr_height * 3 // 4 + 50, text="", font=("Rubik", next_fornt_size, "bold"), fill="red", anchor="w"
+        scr_width // 2 - 180, scr_height * 3 // 4 + 50, text="", font=("Rubik", next_fornt_size, "bold"), fill="red", anchor="w"
     )
     waqth_text1 = main_canvas.create_text(
-        scr_width // 2 - 270, scr_height // 2 - 30, text="", font=("Rubic", 50), fill="yellow", anchor="e"
+        scr_width // 2 - 280, scr_height // 2 - 30, text="", font=("Rubic", 50), fill="yellow", anchor="e"
     )
     iqama_txt = main_canvas.create_text(
-        scr_width // 2 - 270, scr_height * 3 // 4, text="", font=("Amiri", 80), fill="red", anchor="e"
+        scr_width // 2 - 280, scr_height * 3 // 4, text="", font=("Amiri", 80), fill="red", anchor="e"
     )
 
     # Countdown canvas
