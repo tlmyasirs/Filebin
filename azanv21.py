@@ -286,7 +286,7 @@ def setup_main_ui(bg_photo, bg_photo1):
     def update_marquee_text():
         nonlocal marquee_msg, marquee_text_item
         data = get_todays_times()
-        print(data)
+        #print(data)
         # data into string without {,}, and ' 
         new_msg = str(data).replace("{", "").replace("}", "").replace("'", "")
         
