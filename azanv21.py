@@ -8,11 +8,13 @@ from PIL import Image, ImageTk, ImageFont, ImageDraw
 print('loading .....')
 
 # ====== Configuration Constants ======
-FONT_DIR = "/usr/share/fonts/truetype/noto/"
-CSV_FILE = "/home/pi/azan/Filebin/table.csv"
+#FONT_DIR = "/usr/share/fonts/truetype/noto/"
+# ====== Configuration Constants ======
+FONT_DIR = r"C:\Windows\Fonts"
+CSV_FILE = "table.csv"
 #CSV_FILE = "/home/pi/azan/Filebin/table_test.csv"
-BG_IMAGE1 = "/home/pi/azan/Filebin/background7.jpg"
-BG_IMAGE2 = "/home/pi/azan/Filebin/backgroung_iqama.jpg"
+BG_IMAGE1 = "background7.jpg"
+BG_IMAGE2 = "backgroung_iqama.jpg"
 
 # ====== Precomputed Values ======
 # Preload all prayer times
@@ -34,7 +36,14 @@ def prerender_tamil_text():
         "Maghrib": "மஃரிப்",
         "Isha": "இஷா"
     }
-    tamil_font = ImageFont.truetype(os.path.join(FONT_DIR, "NotoSerifTamil-Regular.ttf"), 100)
+    # Use arial.ttf for Windows compatibility (Note: Tamil rendering might be imperfect with standard Arial)
+    try:
+        tamil_font = ImageFont.truetype(os.path.join(FONT_DIR, "arial.ttf"), 100)
+    except OSError:
+        # Fallback to default if arial.ttf is not found (e.g. on Linux/different OS)
+        print("Warning: arial.ttf not found, using load_default()")
+        tamil_font = ImageFont.load_default()
+
     images = {}
     
     for label, text in lookup_dict.items():
@@ -127,13 +136,13 @@ def setup_main_ui(bg_photo, bg_photo1):
     next_fornt_size = int(scr_height / 4 + 10)
     # Display elements
     time_text = main_canvas.create_text(
-        scr_width // 2 + 30, scr_height // 4 - 50, text="", font=("Rubik", time_font_size, "bold"), fill="lime"
+        scr_width // 2 + 30, scr_height // 4 - 70, text="", font=("Rubik", time_font_size, "bold"), fill="lime"
     )
     next_text = main_canvas.create_text(
-        scr_width // 2 - 180, scr_height // 2, text="", font=("Rubik", next_fornt_size, "bold"), fill="yellow", anchor="w"
+        scr_width // 2 - 180, scr_height // 2 +20, text="", font=("Rubik", next_fornt_size, "bold"), fill="yellow", anchor="w"
     )
     extra_text = main_canvas.create_text(
-        scr_width // 2 - 180, scr_height * 3 // 4 + 50, text="", font=("Rubik", next_fornt_size, "bold"), fill="red", anchor="w"
+        scr_width // 2 - 180, scr_height * 3 // 4 + 30, text="", font=("Rubik", next_fornt_size, "bold"), fill="red", anchor="w"
     )
     waqth_text1 = main_canvas.create_text(
         scr_width // 2 - 280, scr_height // 2 - 30, text="", font=("Rubic", 50), fill="yellow", anchor="e"
@@ -269,6 +278,67 @@ def setup_main_ui(bg_photo, bg_photo1):
                 main_canvas.itemconfig(iqama_txt, text="இகாமத்" if label != "Sunrise" else "லுஹா")
         
         root.after(1000, update)
+
+    # ====== Marquee Functionality ======
+    marquee_text_item = None
+    marquee_msg = ""
+    
+    def update_marquee_text():
+        nonlocal marquee_msg, marquee_text_item
+        data = get_todays_times()
+        print(data)
+        # data into string without {,}, and ' 
+        new_msg = str(data).replace("{", "").replace("}", "").replace("'", "")
+        
+        # Only update if changed
+        if new_msg != marquee_msg:
+            marquee_msg = new_msg
+            if marquee_text_item:
+                main_canvas.delete(marquee_text_item)
+            
+            # Create new text item off-screen to the right (at middle of screen)
+            marquee_text_item = main_canvas.create_text(
+                scr_width // 2, scr_height - 50,
+                text=marquee_msg,
+                font=("Arial", 40, "bold"),
+                fill="white",
+                anchor="w"
+            )
+
+    def scroll_marquee():
+        if marquee_text_item:
+            # Move text to the right (negative x)
+            main_canvas.move(marquee_text_item, -2, 0)
+            
+            # Check if it has moved off screen completely
+            bbox = main_canvas.bbox(marquee_text_item)
+            if bbox:
+                x1, y1, x2, y2 = bbox
+                if x2 < 500:
+                    # Reset to start from middle of the screen (Left half viewport entry)
+                    # We place it just outside the visible area of the left half? 
+                    # Actually, for a marquee, it enters from the right side of the viewport.
+                    # The viewport is 0 to scr_width//2. So it should spawn at scr_width//2.
+                    main_canvas.coords(marquee_text_item, scr_width // 2, scr_height - 50)
+        
+        # Schedule next frame (approx 60fps = 16ms, but 30ms is fine for text)
+        root.after(10, scroll_marquee)
+
+    # Initialize marquee
+    update_marquee_text()
+    scroll_marquee()
+    
+    # Hook into main update to check for day changes periodically
+    # We can just add a check in the main update loop to refresh text if day changes
+    original_update = update
+    def update_with_marquee_check():
+        # Check if message needs updating (essentially on day change)
+        # We can do this less frequently or just every second as it's a dict lookup
+        update_marquee_text() 
+        original_update()
+    
+    # Overwrite the update reference so it runs our wrapper
+    update = update_with_marquee_check
 
     # ====== Initialization ======
     print('Starting application...')
