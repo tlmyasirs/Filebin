@@ -8,13 +8,13 @@ from PIL import Image, ImageTk, ImageFont, ImageDraw
 print('loading .....')
 
 # ====== Configuration Constants ======
-#FONT_DIR = "/usr/share/fonts/truetype/noto/"
+FONT_DIR = "/usr/share/fonts/truetype/noto/"
 # ====== Configuration Constants ======
-FONT_DIR = r"C:\Windows\Fonts"
-CSV_FILE = "table.csv"
-#CSV_FILE = "/home/pi/azan/Filebin/table_test.csv"
-BG_IMAGE1 = "background7.jpg"
-BG_IMAGE2 = "backgroung_iqama.jpg"
+#FONT_DIR = r"C:\Windows\Fonts"
+#CSV_FILE = "table.csv"
+CSV_FILE = "/home/pi/azan/Filebin/table.csv"
+BG_IMAGE1 = "/home/pi/azan/Filebin/background7.jpg"
+BG_IMAGE2 = "/home/pi/azan/Filebin/backgroung_iqama.jpg"
 
 # ====== Precomputed Values ======
 # Preload all prayer times
@@ -38,10 +38,10 @@ def prerender_tamil_text():
     }
     # Use arial.ttf for Windows compatibility (Note: Tamil rendering might be imperfect with standard Arial)
     try:
-        tamil_font = ImageFont.truetype(os.path.join(FONT_DIR, "arial.ttf"), 100)
+        tamil_font = ImageFont.truetype(os.path.join(FONT_DIR, "NotoSansTamil-Regular.ttf"), 100)
     except OSError:
         # Fallback to default if arial.ttf is not found (e.g. on Linux/different OS)
-        print("Warning: arial.ttf not found, using load_default()")
+        print("Warning: NotoSansTamil-Regular.ttf not found, using load_default()")
         tamil_font = ImageFont.load_default()
 
     images = {}
@@ -322,7 +322,7 @@ def setup_main_ui(bg_photo, bg_photo1):
                     main_canvas.coords(marquee_text_item, scr_width // 2, scr_height - 50)
         
         # Schedule next frame (approx 60fps = 16ms, but 30ms is fine for text)
-        root.after(10, scroll_marquee)
+        root.after(30, scroll_marquee)
 
     # Initialize marquee
     update_marquee_text()
