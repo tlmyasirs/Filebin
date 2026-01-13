@@ -314,7 +314,7 @@ def setup_main_ui(bg_photo, bg_photo1):
             bbox = main_canvas.bbox(marquee_text_item)
             if bbox:
                 x1, y1, x2, y2 = bbox
-                if x2 < 500:
+                if x2 < 800:
                     # Reset to start from middle of the screen (Left half viewport entry)
                     # We place it just outside the visible area of the left half? 
                     # Actually, for a marquee, it enters from the right side of the viewport.
