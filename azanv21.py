@@ -344,7 +344,7 @@ def setup_main_ui(bg_photo, bg_photo1):
     update = update_with_marquee_check
 
     # ====== Initialization ======
-    print('Starting application...')
+    print('Starting the application...')
     update()
 
 tamil_images = prerender_tamil_text()
