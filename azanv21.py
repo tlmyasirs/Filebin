@@ -148,10 +148,10 @@ def setup_main_ui(bg_photo, bg_photo1):
         scr_width // 2 - 180, scr_height * 3 // 4 + 20, text="", font=("Rubik", next_fornt_size, "bold"), fill="red", anchor="w"
     )
     waqth_text1 = main_canvas.create_text(
-        scr_width // 2 - 280, scr_height // 2 - 10, text="", font=("Rubic", 50), fill="yellow", anchor="e"
+        scr_width // 2 - 280, scr_height // 2, text="", font=("Rubic", 50), fill="yellow", anchor="e"
     )
     iqama_txt = main_canvas.create_text(
-        scr_width // 2 - 280, scr_height * 3 // 4, text="", font=("Amiri", 80), fill="red", anchor="e"
+        scr_width // 2 - 280, scr_height * 3 // 4 +30, text="", font=("Amiri", 80), fill="red", anchor="e"
     )
 
     # Countdown canvas
