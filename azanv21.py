@@ -16,6 +16,7 @@ CSV_FILE = "/home/pi/azan/Filebin/table.csv"
 BG_IMAGE1 = "/home/pi/azan/Filebin/background7.jpg"
 BG_IMAGE2 = "/home/pi/azan/Filebin/backgroung_iqama.jpg"
 
+
 # ====== Precomputed Values ======
 # Preload all prayer times
 def load_all_prayer_times(file_path):
@@ -286,9 +287,11 @@ def setup_main_ui(bg_photo, bg_photo1):
     def update_marquee_text():
         nonlocal marquee_msg, marquee_text_item
         data = get_todays_times()
+        # pop Sunrise from data
+        data.pop("Sunrise", None)
         #print(data)
-        # data into string without {,}, and ' 
-        new_msg = str(data).replace("{", "").replace("}", "").replace("'", "")
+        # data into string without {,}, and ' AM ,PM, Sunrise time
+        new_msg = str(data).replace("{", "").replace("}", "").replace("'", "").replace("AM", "").replace("PM", "")
         
         # Only update if changed
         if new_msg != marquee_msg:
