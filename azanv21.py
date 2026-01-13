@@ -8,13 +8,15 @@ from PIL import Image, ImageTk, ImageFont, ImageDraw
 print('loading .....')
 
 # ====== Configuration Constants ======
-FONT_DIR = "/usr/share/fonts/truetype/noto/"
-# ====== Configuration Constants ======
-#FONT_DIR = r"C:\Windows\Fonts"
-#CSV_FILE = "table.csv"
-CSV_FILE = "/home/pi/azan/Filebin/table.csv"
-BG_IMAGE1 = "/home/pi/azan/Filebin/background7.jpg"
-BG_IMAGE2 = "/home/pi/azan/Filebin/backgroung_iqama.jpg"
+if os.name == 'posix':
+    FONT_DIR = "/usr/share/fonts/truetype/noto/"
+else:
+    FONT_DIR = r"C:\Windows\Fonts"
+#get current directory
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+CSV_FILE = os.path.join(CURRENT_DIR, "table.csv")
+BG_IMAGE1 = os.path.join(CURRENT_DIR, "background7.jpg")
+BG_IMAGE2 = os.path.join(CURRENT_DIR, "backgroung_iqama.jpg")
 
 
 # ====== Precomputed Values ======
@@ -137,16 +139,16 @@ def setup_main_ui(bg_photo, bg_photo1):
     next_fornt_size = int(scr_height / 4 + 10)
     # Display elements
     time_text = main_canvas.create_text(
-        scr_width // 2 + 30, scr_height // 4 - 70, text="", font=("Rubik", time_font_size, "bold"), fill="lime"
+        scr_width // 2 + 30, scr_height // 4 - 80, text="", font=("Rubik", time_font_size, "bold"), fill="lime"
     )
     next_text = main_canvas.create_text(
-        scr_width // 2 - 180, scr_height // 2 +20, text="", font=("Rubik", next_fornt_size, "bold"), fill="yellow", anchor="w"
+        scr_width // 2 - 180, scr_height // 2 , text="", font=("Rubik", next_fornt_size, "bold"), fill="yellow", anchor="w"
     )
     extra_text = main_canvas.create_text(
-        scr_width // 2 - 180, scr_height * 3 // 4 + 30, text="", font=("Rubik", next_fornt_size, "bold"), fill="red", anchor="w"
+        scr_width // 2 - 180, scr_height * 3 // 4 + 20, text="", font=("Rubik", next_fornt_size, "bold"), fill="red", anchor="w"
     )
     waqth_text1 = main_canvas.create_text(
-        scr_width // 2 - 280, scr_height // 2 - 30, text="", font=("Rubic", 50), fill="yellow", anchor="e"
+        scr_width // 2 - 280, scr_height // 2 - 10, text="", font=("Rubic", 50), fill="yellow", anchor="e"
     )
     iqama_txt = main_canvas.create_text(
         scr_width // 2 - 280, scr_height * 3 // 4, text="", font=("Amiri", 80), fill="red", anchor="e"
@@ -291,7 +293,7 @@ def setup_main_ui(bg_photo, bg_photo1):
         data.pop("Sunrise", None)
         #print(data)
         # data into string without {,}, and ' AM ,PM, Sunrise time
-        new_msg = str(data).replace("{", "").replace("}", "").replace("'", "").replace("AM", "").replace("PM", "")
+        new_msg = str(data).replace("{", "").replace("}", "").replace("'", "").replace("AM", "").replace("PM", "").replace(" ,", "")
         
         # Only update if changed
         if new_msg != marquee_msg:
@@ -299,37 +301,17 @@ def setup_main_ui(bg_photo, bg_photo1):
             if marquee_text_item:
                 main_canvas.delete(marquee_text_item)
             
-            # Create new text item off-screen to the right (at middle of screen)
+            # Create new text item centered at the bottom
             marquee_text_item = main_canvas.create_text(
                 scr_width // 2, scr_height - 50,
                 text=marquee_msg,
                 font=("Arial", 40, "bold"),
                 fill="white",
-                anchor="w"
+                anchor="center"
             )
-
-    def scroll_marquee():
-        if marquee_text_item:
-            # Move text to the right (negative x)
-            main_canvas.move(marquee_text_item, -2, 0)
-            
-            # Check if it has moved off screen completely
-            bbox = main_canvas.bbox(marquee_text_item)
-            if bbox:
-                x1, y1, x2, y2 = bbox
-                if x2 < 800:
-                    # Reset to start from middle of the screen (Left half viewport entry)
-                    # We place it just outside the visible area of the left half? 
-                    # Actually, for a marquee, it enters from the right side of the viewport.
-                    # The viewport is 0 to scr_width//2. So it should spawn at scr_width//2.
-                    main_canvas.coords(marquee_text_item, scr_width // 2, scr_height - 50)
-        
-        # Schedule next frame (approx 60fps = 16ms, but 30ms is fine for text)
-        root.after(30, scroll_marquee)
 
     # Initialize marquee
     update_marquee_text()
-    scroll_marquee()
     
     # Hook into main update to check for day changes periodically
     # We can just add a check in the main update loop to refresh text if day changes
