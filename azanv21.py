@@ -148,7 +148,7 @@ def setup_main_ui(bg_photo, bg_photo1):
         scr_width // 2 - 180, scr_height * 3 // 4 + 20, text="", font=("Rubik", next_fornt_size, "bold"), fill="red", anchor="w"
     )
     waqth_text1 = main_canvas.create_text(
-        scr_width // 2 - 280, scr_height // 2, text="", font=("Rubic", 50), fill="yellow", anchor="e"
+        scr_width // 2 - 280, scr_height // 2 -30, text="", font=("Rubic", 50), fill="yellow", anchor="e"
     )
     iqama_txt = main_canvas.create_text(
         scr_width // 2 - 280, scr_height * 3 // 4 +30, text="", font=("Amiri", 80), fill="red", anchor="e"
@@ -305,7 +305,7 @@ def setup_main_ui(bg_photo, bg_photo1):
             marquee_text_item = main_canvas.create_text(
                 scr_width // 2, scr_height - 50,
                 text=marquee_msg,
-                font=("Arial", 40, "bold"),
+                font=("Arial", 70, "bold"),
                 fill="white",
                 anchor="center"
             )
