@@ -305,7 +305,7 @@ def setup_main_ui(bg_photo, bg_photo1):
             marquee_text_item = main_canvas.create_text(
                 scr_width // 2, scr_height - 50,
                 text=marquee_msg,
-                font=("Arial", 70, "bold"),
+                font=("Arial", 60, "bold"),
                 fill="white",
                 anchor="center"
             )
