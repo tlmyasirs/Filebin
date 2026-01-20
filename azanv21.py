@@ -29,7 +29,7 @@ def load_all_prayer_times(file_path):
             data[row['Date']] = {k: row[k] for k in row if k != 'Date'}
     return data
 
-# Pre-render Tamil text images
+# Pre-render Tamil text images99
 def prerender_tamil_text():
     lookup_dict = {
         "Subahu": "சுபஹ்",
@@ -139,13 +139,13 @@ def setup_main_ui(bg_photo, bg_photo1):
     next_fornt_size = int(scr_height / 4 + 10)
     # Display elements
     time_text = main_canvas.create_text(
-        scr_width // 2 + 30, scr_height // 4 - 80, text="", font=("Rubik", time_font_size, "bold"), fill="lime"
+        scr_width // 2 + 30, scr_height // 4 - 100, text="", font=("Rubik", time_font_size, "bold"), fill="lime"
     )
     next_text = main_canvas.create_text(
-        scr_width // 2 - 180, scr_height // 2 -30, text="", font=("Rubik", next_fornt_size, "bold"), fill="yellow", anchor="w"
+        scr_width // 2 - 180, scr_height // 2 -50, text="", font=("Rubik", next_fornt_size, "bold"), fill="yellow", anchor="w"
     )
     extra_text = main_canvas.create_text(
-        scr_width // 2 - 180, scr_height * 3 // 4, text="", font=("Rubik", next_fornt_size, "bold"), fill="red", anchor="w"
+        scr_width // 2 - 180, scr_height * 3 // 4 - 20, text="", font=("Rubik", next_fornt_size, "bold"), fill="red", anchor="w"
     )
     waqth_text1 = main_canvas.create_text(
         scr_width // 2 - 280, scr_height // 2 -80, text="", font=("Rubic", 50), fill="yellow", anchor="e"
@@ -288,13 +288,13 @@ def setup_main_ui(bg_photo, bg_photo1):
     
     def update_marquee_text():
         nonlocal marquee_msg, marquee_text_item
-        data = get_todays_times()
+        scroll_data = get_todays_times()
         # pop Sunrise from data
-        data.pop("Sunrise", None)
+        scroll_data.pop("Sunrise", None)
         #print(data)
         # data into string without {,}, and ' AM ,PM, Sunrise time
-        new_msg = str(data).replace("{", "").replace("}", "").replace("'", "").replace("AM", "").replace("PM", "").replace(" ,", "")
-        
+        new_msg = str(scroll_data).replace("{", "").replace("}", "").replace("'", "").replace("AM", "").replace("PM", "").replace(" ,", "").replace(": ", " ").replace("Subahu", "").replace("Maghrib", "Magrb").replace("Asar", "Asr")
+                
         # Only update if changed
         if new_msg != marquee_msg:
             marquee_msg = new_msg
@@ -305,7 +305,7 @@ def setup_main_ui(bg_photo, bg_photo1):
             marquee_text_item = main_canvas.create_text(
                 scr_width // 2, scr_height - 50,
                 text=marquee_msg,
-                font=("Arial", 60, "bold"),
+                font=("Arial", 75, "bold"),
                 fill="white",
                 anchor="center"
             )
