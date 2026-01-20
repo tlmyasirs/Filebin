@@ -142,10 +142,10 @@ def setup_main_ui(bg_photo, bg_photo1):
         scr_width // 2 + 30, scr_height // 4 - 80, text="", font=("Rubik", time_font_size, "bold"), fill="lime"
     )
     next_text = main_canvas.create_text(
-        scr_width // 2 - 180, scr_height // 2 , text="", font=("Rubik", next_fornt_size, "bold"), fill="yellow", anchor="w"
+        scr_width // 2 - 180, scr_height // 2 -30, text="", font=("Rubik", next_fornt_size, "bold"), fill="yellow", anchor="w"
     )
     extra_text = main_canvas.create_text(
-        scr_width // 2 - 180, scr_height * 3 // 4 + 20, text="", font=("Rubik", next_fornt_size, "bold"), fill="red", anchor="w"
+        scr_width // 2 - 180, scr_height * 3 // 4, text="", font=("Rubik", next_fornt_size, "bold"), fill="red", anchor="w"
     )
     waqth_text1 = main_canvas.create_text(
         scr_width // 2 - 280, scr_height // 2 -80, text="", font=("Rubic", 50), fill="yellow", anchor="e"
