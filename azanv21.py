@@ -288,7 +288,7 @@ def setup_main_ui(bg_photo, bg_photo1):
     
     def update_marquee_text():
         nonlocal marquee_msg, marquee_text_item
-        scroll_data = get_todays_times()
+        scroll_data = get_todays_times().copy()
         # pop Sunrise from data
         scroll_data.pop("Sunrise", None)
         #print(data)
