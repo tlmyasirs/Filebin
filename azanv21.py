@@ -332,9 +332,9 @@ def setup_main_ui(bg_photo, bg_photo1):
                 # Reset to right side, maintaining same Y coordinate
                 
                 main_canvas.coords(marquee_text_item, width -300, scr_height - 50)
-        #root.after(50, scroll_marquee)
+        root.after(50, scroll_marquee)
     
-    #scroll_marquee()
+    scroll_marquee()
     
     
     # Hook into main update to check for day changes periodically
