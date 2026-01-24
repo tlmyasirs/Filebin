@@ -6,7 +6,7 @@ import tkinter as tk
 from PIL import Image, ImageTk, ImageFont, ImageDraw
 
 print('loading .....')
-
+current_prayer = None
 # ====== Configuration Constants ======
 if os.name == 'posix':
     FONT_DIR = "/usr/share/fonts/truetype/noto/"
@@ -218,6 +218,7 @@ def setup_main_ui(bg_photo, bg_photo1):
     main_canvas.tamil_img_item = None
 
     def update():
+        global current_prayer
         now_dt = datetime.now()
         
         # Always update the clock
@@ -239,6 +240,7 @@ def setup_main_ui(bg_photo, bg_photo1):
         
         if state.next_prayer[0]:
             label, prayer_time = state.next_prayer
+            current_prayer = label
             duration = label_minutes.get(label, 15)
             iqamah_time = prayer_time + timedelta(minutes=duration)
             
@@ -286,11 +288,16 @@ def setup_main_ui(bg_photo, bg_photo1):
     marquee_text_item = None
     marquee_msg = ""
     
+
     def update_marquee_text():
+        global current_prayer
         nonlocal marquee_msg, marquee_text_item
         scroll_data = get_todays_times().copy()
         # pop Sunrise from data
-        scroll_data.pop("Sunrise", None)
+        a = "Sunrise"
+
+        scroll_data.pop(a, None)
+        scroll_data.pop(current_prayer,None)
         #print(data)
         # data into string without {,}, and ' AM ,PM, Sunrise time
         new_msg = str(scroll_data).replace("{", "").replace("}", "").replace("'", "").replace("AM", "").replace("PM", "").replace(" ,", "").replace(": ", " ").replace("Subahu", "").replace("Maghrib", "Magrb").replace("Asar", "Asr")
@@ -305,13 +312,30 @@ def setup_main_ui(bg_photo, bg_photo1):
             marquee_text_item = main_canvas.create_text(
                 scr_width // 2, scr_height - 50,
                 text=marquee_msg,
-                font=("Arial", 75, "bold"),
+                font=("Arial", 80, "bold"),
                 fill="white",
                 anchor="center"
             )
 
     # Initialize marquee
+    # run the marquee 
     update_marquee_text()
+    # scroll the marquee
+    def scroll_marquee():
+        nonlocal marquee_text_item
+        if marquee_text_item:
+            x1, y1, x2, y2 = main_canvas.bbox(marquee_text_item)
+            main_canvas.move(marquee_text_item, -5, 0)
+            # if text end is at right side
+            width = x2 - x1
+            if x2 < 1100:
+                # Reset to right side, maintaining same Y coordinate
+                
+                main_canvas.coords(marquee_text_item, width -300, scr_height - 50)
+        root.after(50, scroll_marquee)
+    
+    scroll_marquee()
+    
     
     # Hook into main update to check for day changes periodically
     # We can just add a check in the main update loop to refresh text if day changes
@@ -319,11 +343,12 @@ def setup_main_ui(bg_photo, bg_photo1):
     def update_with_marquee_check():
         # Check if message needs updating (essentially on day change)
         # We can do this less frequently or just every second as it's a dict lookup
-        update_marquee_text() 
+        update_marquee_text()
         original_update()
     
     # Overwrite the update reference so it runs our wrapper
     update = update_with_marquee_check
+
 
     # ====== Initialization ======
     print('Starting the application...')
