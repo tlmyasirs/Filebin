@@ -300,7 +300,7 @@ def setup_main_ui(bg_photo, bg_photo1):
         scroll_data.pop(current_prayer,None)
         #print(data)
         # data into string without {,}, and ' AM ,PM, Sunrise time
-        new_msg = str(scroll_data).replace("{", "").replace("}", "").replace("'", "").replace("AM", "").replace("PM", "").replace(" ,", "").replace(": ", " ").replace("Subahu", "").replace("Maghrib", "Magrb").replace("Asar", "Asr")
+        new_msg = str(scroll_data).replace("{", "").replace("}", "").replace("'", "").replace("AM", "").replace("PM", "").replace(" ,", "").replace(": ", " ").replace("Subahu", "").replace("Maghrib", "Marib").replace("Asar", "Asr")
                 
         # Only update if changed
         if new_msg != marquee_msg:
@@ -312,7 +312,7 @@ def setup_main_ui(bg_photo, bg_photo1):
             marquee_text_item = main_canvas.create_text(
                 scr_width // 2, scr_height - 50,
                 text=marquee_msg,
-                font=("Arial", 80, "bold"),
+                font=("Arial", 90, "bold"),
                 fill="white",
                 anchor="center"
             )
