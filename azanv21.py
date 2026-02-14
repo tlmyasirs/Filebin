@@ -97,6 +97,8 @@ scr_width = root.winfo_screenwidth()
 scr_height = root.winfo_screenheight()
 root.geometry(f"{scr_width}x{scr_height}")
 root.attributes('-fullscreen', True)
+root.overrideredirect(True)
+root.geometry(f"{w}x{h}+0+0")
 
 # Create loading screen
 loading_canvas = tk.Canvas(root, width=scr_width, height=scr_height, bg='black')
