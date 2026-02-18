@@ -181,7 +181,7 @@ def setup_main_ui(bg_photo, bg_photo1):
 
     # ====== Prayer Time Logic ======
     label_minutes = {
-        "Subahu": 15,
+        "Subahu": 20,
         "Sunrise": 20,
         "Maghrib": 15,
     }
