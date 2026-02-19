@@ -243,7 +243,7 @@ def setup_main_ui(bg_photo, bg_photo1):
         if state.next_prayer[0]:
             label, prayer_time = state.next_prayer
             current_prayer = label
-            duration = label_minutes.get(label, 15)
+            duration = label_minutes.get(label, 65)
             iqamah_time = prayer_time + timedelta(minutes=duration)
             
             # Check if we should start countdown
