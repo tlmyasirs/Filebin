@@ -303,8 +303,8 @@ def setup_main_ui(bg_photo, bg_photo1):
         scroll_data.pop(current_prayer,None)
         #print(data)
         # data into string without {,}, and ' AM ,PM, Sunrise time
-        #new_msg = str(scroll_data).replace("{", "").replace("}", "").replace("'", "").replace("AM", "").replace("PM", "").replace(" ,", "").replace(": ", " ").replace("Subahu", "").replace("Maghrib", "Marib").replace("Asar", "Asr")
-        new_msg = "Isha iqamath: 8:30 PM"        
+        new_msg = str(scroll_data).replace("{", "").replace("}", "").replace("'", "").replace("AM", "").replace("PM", "").replace(" ,", "").replace(": ", " ").replace("Subahu", "").replace("Maghrib", "Marib").replace("Asar", "Asr")
+        #new_msg = "Isha iqamath: 8:30 PM"        
         # Only update if changed
         if new_msg != marquee_msg:
             marquee_msg = new_msg
