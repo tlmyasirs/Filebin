@@ -71,13 +71,24 @@ def get_next_prayer():
     today = now_dt.strftime('%d/%m/%Y')
     tomorrow = (now_dt + timedelta(days=1)).strftime('%d/%m/%Y')
     
-    # Find next prayer today
+    label_minutes = {
+        "Subahu": 20,
+        "Sunrise": 20,
+        "Maghrib": 20,
+        "Isha": 15,
+    }
+    
+    # Find next prayer today (or current prayer if in its iqamah window)
     if today in prayer_data:
         times = prayer_data[today]
         for label, time_str in times.items():
             prayer_time = datetime.strptime(time_str, '%I:%M %p').time()
             prayer_dt = datetime.combine(now_dt.date(), prayer_time)
-            if prayer_dt > now_dt:
+            duration = label_minutes.get(label, 15)
+            iqamah_time = prayer_dt + timedelta(minutes=duration)
+            
+            # Return if prayer is in the future or currently happening (within iqamah window)
+            if prayer_dt <= now_dt < iqamah_time or prayer_dt > now_dt:
                 return label, prayer_dt
 
     # Find first prayer tomorrow
@@ -184,7 +195,7 @@ def setup_main_ui(bg_photo, bg_photo1):
         "Subahu": 20,
         "Sunrise": 20,
         "Maghrib": 20,
-        "Isha": 65,
+        "Isha": 55,
     }
 
     # ====== State Management ======
@@ -246,26 +257,29 @@ def setup_main_ui(bg_photo, bg_photo1):
             current_prayer = label
             duration = label_minutes.get(label, 15)
             iqamah_time = prayer_time + timedelta(minutes=duration)
+            if label == "Isha":
+                # iqamah time is at 8:30 PM regardless of prayer time
+                iqamah_time = datetime.combine(prayer_time.date(), datetime.strptime("6:00 PM", '%I:%M %p').time())
             
-            # Check if we should start countdown
-            if prayer_time <= now_dt < iqamah_time and not state.in_countdown:
+            # Check if we should start countdown (only if less than 31 minutes remaining)
+            remaining = int((iqamah_time - now_dt).total_seconds())
+            if prayer_time <= now_dt < iqamah_time and remaining < 31 * 60 and not state.in_countdown:
                 # Start countdown
                 state.in_countdown = True
                 state.current_countdown_label = label
                 state.current_countdown_end = iqamah_time
                 countdown_canvas.pack(fill="both", expand=True)
                 main_canvas.pack_forget()
-                remaining = int((iqamah_time - now_dt).total_seconds())
                 update_countdown(remaining, label)
                 root.after(1000, update)
                 return
             
             # Update to next prayer if current has passed
-            if now_dt >= iqamah_time:
+            '''if now_dt >= iqamah_time:
                 state.next_prayer = get_next_prayer()
                 if state.next_prayer[0]:
                     label, prayer_time = state.next_prayer
-            
+            '''
             # Update display
             if state.next_prayer[0]:
                 # Update Tamil image
