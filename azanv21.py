@@ -183,7 +183,7 @@ def setup_main_ui(bg_photo, bg_photo1):
     label_minutes = {
         "Subahu": 20,
         "Sunrise": 20,
-        "Maghrib": 15,
+        "Maghrib": 20,
         "Isha": 65,
     }
 
