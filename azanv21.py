@@ -1,4 +1,4 @@
-import csv
+weimport csv
 import os
 import threading
 from datetime import datetime, timedelta
@@ -275,11 +275,11 @@ def setup_main_ui(bg_photo, bg_photo1):
                 return
             
             # Update to next prayer if current has passed
-            '''if now_dt >= iqamah_time:
+            if now_dt >= iqamah_time:
                 state.next_prayer = get_next_prayer()
                 if state.next_prayer[0]:
                     label, prayer_time = state.next_prayer
-            '''
+            
             # Update display
             if state.next_prayer[0]:
                 # Update Tamil image
