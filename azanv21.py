@@ -1,4 +1,4 @@
-weimport csv
+import csv
 import os
 import threading
 from datetime import datetime, timedelta
