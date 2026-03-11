@@ -259,7 +259,7 @@ def setup_main_ui(bg_photo, bg_photo1):
             iqamah_time = prayer_time + timedelta(minutes=duration)
             if label == "Isha":
                 # iqamah time is at 8:30 PM regardless of prayer time
-                iqamah_time = datetime.combine(prayer_time.date(), datetime.strptime("8:30 PM", '%I:%M %p').time())
+                iqamah_time = datetime.combine(prayer_time.date(), datetime.strptime("8:15 PM", '%I:%M %p').time())
             
             # Check if we should start countdown (only if less than 31 minutes remaining)
             remaining = int((iqamah_time - now_dt).total_seconds())
