@@ -194,8 +194,7 @@ def setup_main_ui(bg_photo, bg_photo1):
     label_minutes = {
         "Subahu": 20,
         "Sunrise": 20,
-        "Maghrib": 20,
-        "Isha": 55,
+        "Maghrib": 20
     }
 
     # ====== State Management ======
@@ -257,9 +256,9 @@ def setup_main_ui(bg_photo, bg_photo1):
             current_prayer = label
             duration = label_minutes.get(label, 15)
             iqamah_time = prayer_time + timedelta(minutes=duration)
-            if label == "Isha":
+            #if label == "Isha":
                 # iqamah time is at 8:30 PM regardless of prayer time
-                iqamah_time = datetime.combine(prayer_time.date(), datetime.strptime("8:15 PM", '%I:%M %p').time())
+                #iqamah_time = datetime.combine(prayer_time.date(), datetime.strptime("8:15 PM", '%I:%M %p').time())
             
             # Check if we should start countdown (only if less than 31 minutes remaining)
             remaining = int((iqamah_time - now_dt).total_seconds())
