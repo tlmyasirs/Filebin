@@ -72,9 +72,9 @@ def get_next_prayer():
     tomorrow = (now_dt + timedelta(days=1)).strftime('%d/%m/%Y')
     
     label_minutes = {
-        "Subahu": 20,
+        "Subahu": 30,
         "Sunrise": 20,
-        "Maghrib": 20,
+        "Maghrib": 10,
         "Isha": 15,
     }
     
