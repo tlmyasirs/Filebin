@@ -192,9 +192,9 @@ def setup_main_ui(bg_photo, bg_photo1):
 
     # ====== Prayer Time Logic ======
     label_minutes = {
-        "Subahu": 20,
+        "Subahu": 30,
         "Sunrise": 20,
-        "Maghrib": 20
+        "Maghrib": 10
     }
 
     # ====== State Management ======
