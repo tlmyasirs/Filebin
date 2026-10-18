@@ -258,7 +258,8 @@ def setup_main_ui(background_image, countdown_image):
         new_text = "   ".join(parts)
         if new_text == marquee_text:
             return
-        marquee_text = new_text
+        #marquee_text = new_text
+        marquee_text = "இஷா தொழுகை வழமையை விட சற்று தாமதமாக நடை பெறும்"
         if marquee_item is not None:
             main_canvas.delete(marquee_item)
         marquee_item = main_canvas.create_text(
