@@ -318,7 +318,7 @@ def setup_main_ui(background_image, countdown_image):
 
     def scroll_marquee():
         if marquee_item is not None and not in_countdown:
-            main_canvas.move(marquee_item, -10, 0)
+            main_canvas.move(marquee_item, -15, 0)
             bounds = main_canvas.bbox(marquee_item)
             if bounds and bounds[2] < 0:
                 width = bounds[2] - bounds[0]
