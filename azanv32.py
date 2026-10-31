@@ -22,7 +22,7 @@ BG_IMAGE2 = os.path.join(CURRENT_DIR, "backgroung_iqama.jpg")
 CLOCK_INTERVAL_MS = 1000
 MARQUEE_INTERVAL_MS = 100
 
-CUSTOM_MARQUEE = True  # True: custom Tamil message; False: prayer-time ticker from azanv30
+CUSTOM_MARQUEE = False # True: custom Tamil message; False: prayer-time ticker from azanv30
 MARQUEE_TEXT = "இஷா தொழுகை வழமையை விட சற்று தாமதமாக நடை பெறும்"
 MARQUEE_FONT_SIZE = 63
 
